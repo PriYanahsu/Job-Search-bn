@@ -1,10 +1,14 @@
 package com.Priyanshu.jobSearch.Job.Service;
 
+import com.Priyanshu.jobSearch.Application.Model.ApplicationModel;
 import com.Priyanshu.jobSearch.Job.Model.JobModel;
 import com.Priyanshu.jobSearch.Job.Repository.JobRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JobsService {
@@ -14,5 +18,9 @@ public class JobsService {
 
     public JobModel addJob(JobModel job){
         return jobrepo.save(job);
+    }
+
+    public List<ApplicationModel> getAllJobsUser(long User_ID){
+        return jobrepo.getAllJobUser(User_ID);
     }
 }

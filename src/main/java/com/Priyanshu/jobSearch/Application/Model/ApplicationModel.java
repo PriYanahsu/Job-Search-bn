@@ -8,6 +8,8 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "Application")
+@Getter
+@Setter
 public class ApplicationModel {
 
     @Id
@@ -24,11 +26,4 @@ public class ApplicationModel {
 
     private String status;
 
-    public void setUser(String status){
-        this.status = status;
-    }
-
-    public String getUser() {
-        return status;
-    }
 }
