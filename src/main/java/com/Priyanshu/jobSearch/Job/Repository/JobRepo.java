@@ -8,11 +8,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface JobRepo extends JpaRepository<JobModel, Long> {
 
     @Query("Select a from ApplicationModel a where a.user.id = :userId")
-    List<ApplicationModel> getAllJobUser(@Param("user_ID") long userId);
+    List<ApplicationModel> getAllJobUser(@Param("userId") long userId);
 }

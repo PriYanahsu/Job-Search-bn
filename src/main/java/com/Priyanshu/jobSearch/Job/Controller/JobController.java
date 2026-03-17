@@ -38,8 +38,8 @@ public class JobController {
         return ResponseEntity.badRequest().body(response);
     }
 
-    @GetMapping("applied/${User_ID}")
-    public List<ApplicationModel> getAllJobs(@PathVariable Long User_ID){
-        return jobservice.getAllJobsUser(User_ID);
+    @GetMapping("applied/{userId}")
+    public List<ApplicationModel> getAllJobs(@PathVariable Long userId){
+        return jobservice.getAllJobsUser(userId);
     }
 }

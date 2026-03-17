@@ -23,7 +23,7 @@ public class ApplicationService {
 
     public String JobApply(Long UserId, Long JobId){
 
-        UserModel user = userrepo.findByUserId(UserId)
+        UserModel user = userrepo.findById(UserId)
                 .orElseThrow(() -> new RuntimeException("User Not Found"));
 
         JobModel Job = jobrepo.findById(JobId)
