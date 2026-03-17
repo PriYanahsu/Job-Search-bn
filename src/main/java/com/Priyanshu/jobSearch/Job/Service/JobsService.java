@@ -20,7 +20,12 @@ public class JobsService {
         return jobrepo.save(job);
     }
 
-    public List<ApplicationModel> getAllJobsUser(long User_ID){
-        return jobrepo.getAllJobUser(User_ID);
+    public List<ApplicationModel> getAllJobsUser(long userId){
+        return jobrepo.getAllJobUser(userId);
     }
+
+    public List<JobModel> getAllJobs(){
+        return jobrepo.findAll();
+    }
+
 }

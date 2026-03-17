@@ -21,7 +21,7 @@ public class JobController {
     public JobsService jobservice;
 
     @PostMapping("/addJobs")
-    public ResponseEntity<?> addJobs(JobModel job){
+    public ResponseEntity<?> addJobs(@RequestBody JobModel job){
 
         Map<String, Object> response = new HashMap<>();
 
@@ -38,8 +38,13 @@ public class JobController {
         return ResponseEntity.badRequest().body(response);
     }
 
-    @GetMapping("applied/${User_ID}")
-    public List<ApplicationModel> getAllJobs(@PathVariable Long User_ID){
-        return jobservice.getAllJobsUser(User_ID);
+    @GetMapping("/applied/{userId}")
+    public List<ApplicationModel> getAllJobs(@PathVariable Long userId){
+        return jobservice.getAllJobsUser(userId);
+    }
+
+    @GetMapping("/getAllJobs")
+    public List<JobModel> getAllJobs(){
+        return jobservice.getAllJobs();
     }
 }
