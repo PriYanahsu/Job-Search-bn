@@ -14,4 +14,6 @@ public interface JobRepo extends JpaRepository<JobModel, Long> {
 
     @Query("Select a from ApplicationModel a where a.user.id = :userId")
     List<ApplicationModel> getAllJobUser(@Param("userId") long userId);
+
+
 }
