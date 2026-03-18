@@ -25,6 +25,6 @@ public class JobModel {
     List<String> skillsRequired;
 
     @OneToMany(mappedBy = "job")
-    @JsonManagedReference
+    @JsonManagedReference(value = "job-application")
     List<ApplicationModel> applications;
 }
