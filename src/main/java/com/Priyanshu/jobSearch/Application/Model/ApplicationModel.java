@@ -2,6 +2,7 @@ package com.Priyanshu.jobSearch.Application.Model;
 
 import com.Priyanshu.jobSearch.Job.Model.JobModel;
 import com.Priyanshu.jobSearch.User.Model.UserModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,11 +18,13 @@ public class ApplicationModel {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_Id")
+    @JoinColumn(name = "userId")
+    @JsonBackReference
     private UserModel user;
 
     @ManyToOne
-    @JoinColumn(name = "job_Id")
+    @JoinColumn(name = "jobId")
+    @JsonBackReference
     private JobModel job;
 
     private String status;
