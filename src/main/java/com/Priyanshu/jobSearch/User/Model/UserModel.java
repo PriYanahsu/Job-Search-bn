@@ -1,6 +1,8 @@
 package com.Priyanshu.jobSearch.User.Model;
 
 import com.Priyanshu.jobSearch.Application.Model.ApplicationModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +32,10 @@ public class UserModel {
     private String password;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     List<ApplicationModel> applicationData;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
+

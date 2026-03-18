@@ -6,6 +6,7 @@ import com.Priyanshu.jobSearch.Job.Service.JobsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -20,8 +21,11 @@ public class JobController {
     @Autowired
     public JobsService jobservice;
 
-    @PostMapping("/addJobs")
+    @PreAuthorize("hasRole('OWNER')")
+    @PostMapping("/addJob")
     public ResponseEntity<?> addJobs(@RequestBody JobModel job){
+
+        System.out.println("What is the issue"+ job);
 
         Map<String, Object> response = new HashMap<>();
 
@@ -38,10 +42,13 @@ public class JobController {
         return ResponseEntity.badRequest().body(response);
     }
 
+    // ⚠️ Secure this properly
+    @PreAuthorize("hasAnyRole('USER','OWNER')")
     @GetMapping("/applied/{userId}")
     public List<ApplicationModel> getAllJobs(@PathVariable Long userId){
         return jobservice.getAllJobsUser(userId);
     }
+
 
     @GetMapping("/getAllJobs")
     public List<JobModel> getAllJobs(){
