@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")
@@ -44,23 +45,34 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody UserModel user){
 
-        boolean valid = userService.loginUser(user.getEmail(), user.getPassword());
+        Optional<UserModel> validUser =
+                userService.loginUser(user.getEmail(), user.getPassword());
 
         Map<String, Object> response = new HashMap<>();
 
-        if(!valid){
+        if(validUser.isEmpty()){
             response.put("status","error");
             response.put("message","Invalid email or password");
-
             return ResponseEntity.status(401).body(response);
         }
 
-        String accessToken = jwtUtil.generateAccessToken(user.getEmail());
-        String refreshToken = jwtUtil.generateRefreshToken(user.getEmail());
+        UserModel loggedInUser = validUser.get();
+
+        // Include ROLE in token
+        String accessToken = jwtUtil.generateAccessToken(
+                loggedInUser.getEmail(),
+                loggedInUser.getRole().name()
+        );
+
+        String refreshToken = jwtUtil.generateRefreshToken(loggedInUser.getEmail());
 
         response.put("status","success");
         response.put("accessToken", accessToken);
         response.put("refreshToken", refreshToken);
+
+        // Send extra info (useful for frontend)
+        response.put("role", loggedInUser.getRole());
+        response.put("userId", loggedInUser.getId());
 
         return ResponseEntity.ok(response);
     }

@@ -32,4 +32,7 @@ public class UserModel {
     @OneToMany(mappedBy = "user")
     List<ApplicationModel> applicationData;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
+

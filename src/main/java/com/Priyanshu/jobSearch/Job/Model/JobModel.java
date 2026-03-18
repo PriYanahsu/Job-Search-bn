@@ -2,11 +2,15 @@ package com.Priyanshu.jobSearch.Job.Model;
 
 import com.Priyanshu.jobSearch.Application.Model.ApplicationModel;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Table(name = "Jobs")
+@Getter
+@Setter
 public class JobModel {
 
     @Id

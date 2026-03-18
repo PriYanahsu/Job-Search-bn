@@ -1,6 +1,7 @@
 package com.Priyanshu.jobSearch.User.Service;
 
 import com.Priyanshu.jobSearch.Config.SecurityConfig;
+import com.Priyanshu.jobSearch.User.Model.Role;
 import com.Priyanshu.jobSearch.User.Model.UserModel;
 import com.Priyanshu.jobSearch.User.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,20 +28,23 @@ public class UserService {
         }
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());
-
         user.setPassword(encodedPassword);
+
+        if(user.getEmail().equals("priyanshu@gmail.com")){
+            user.setRole(Role.OWNER);
+        } else {
+            user.setRole(Role.USER);
+        }
 
         userRepository.save(user);
 
         return "REGISTER_SUCCESS";
     }
 
-    public boolean loginUser(String email, String password){
+    public Optional<UserModel> loginUser(String email, String password){
 
         Optional<UserModel> user = userRepository.findByEmail(email);
 
-        return user
-                .filter(userModel -> passwordEncoder.matches(password, userModel.getPassword()))
-                .isPresent();
+        return user.filter(u -> passwordEncoder.matches(password, u.getPassword()));
     }
 }
