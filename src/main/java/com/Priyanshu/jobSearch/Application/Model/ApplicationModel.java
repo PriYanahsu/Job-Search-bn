@@ -19,12 +19,12 @@ public class ApplicationModel {
 
     @ManyToOne
     @JoinColumn(name = "userId")
-    @JsonBackReference
+    @JsonBackReference(value = "user-application")
     private UserModel user;
 
     @ManyToOne
     @JoinColumn(name = "jobId")
-    @JsonBackReference
+    @JsonBackReference(value = "job-application")
     private JobModel job;
 
     private String status;

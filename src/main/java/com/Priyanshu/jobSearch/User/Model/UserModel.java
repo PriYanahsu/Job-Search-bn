@@ -32,7 +32,7 @@ public class UserModel {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference
+    @JsonManagedReference(value = "user-application")
     List<ApplicationModel> applicationData;
 
     @Enumerated(EnumType.STRING)
