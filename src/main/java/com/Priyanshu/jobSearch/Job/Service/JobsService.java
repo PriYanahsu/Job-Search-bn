@@ -1,6 +1,7 @@
 package com.Priyanshu.jobSearch.Job.Service;
 
 import com.Priyanshu.jobSearch.Application.Model.ApplicationModel;
+import com.Priyanshu.jobSearch.Job.DTO.AppliedJobDTO;
 import com.Priyanshu.jobSearch.Job.Model.JobModel;
 import com.Priyanshu.jobSearch.Job.Repository.JobRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class JobsService {
         return jobrepo.save(job);
     }
 
-    public List<ApplicationModel> getAllJobsUser(long userId){
+    public List<AppliedJobDTO> getAllJobsUser(long userId){
         return jobrepo.getAllJobUser(userId);
     }
 

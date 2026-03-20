@@ -1,6 +1,7 @@
 package com.Priyanshu.jobSearch.User.Controller;
 
 import com.Priyanshu.jobSearch.Config.JwtUtil;
+import com.Priyanshu.jobSearch.User.DTO.UserLoginDTO;
 import com.Priyanshu.jobSearch.User.Model.UserModel;
 import com.Priyanshu.jobSearch.User.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class UserController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody UserModel user){
+    public ResponseEntity<?> loginUser(@RequestBody UserLoginDTO user){
 
         Optional<UserModel> validUser =
                 userService.loginUser(user.getEmail(), user.getPassword());

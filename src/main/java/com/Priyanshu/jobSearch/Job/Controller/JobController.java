@@ -1,7 +1,9 @@
 package com.Priyanshu.jobSearch.Job.Controller;
 
 import com.Priyanshu.jobSearch.Application.Model.ApplicationModel;
+import com.Priyanshu.jobSearch.Job.DTO.AppliedJobDTO;
 import com.Priyanshu.jobSearch.Job.Model.JobModel;
+import com.Priyanshu.jobSearch.Job.Repository.JobRepo;
 import com.Priyanshu.jobSearch.Job.Service.JobsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -42,11 +44,14 @@ public class JobController {
         return ResponseEntity.badRequest().body(response);
     }
 
-    // ⚠️ Secure this properly
-    @PreAuthorize("hasAnyRole('USER','OWNER')")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/applied/{userId}")
-    public List<ApplicationModel> getAllJobs(@PathVariable Long userId){
-        return jobservice.getAllJobsUser(userId);
+    public List<AppliedJobDTO> getAllJobs(@PathVariable Long userId){
+        List<AppliedJobDTO> jobs = jobservice.getAllJobsUser(userId);
+
+        System.out.println("Jobs fetched: " + jobs);
+
+        return jobs;
     }
 
 

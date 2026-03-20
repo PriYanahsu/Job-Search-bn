@@ -40,7 +40,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             if(jwtUtil.validateToken(token)){
 
-                // 🔥 Extract claims
+                //  Extract claims
                 Claims claims = Jwts.parser()
                         .setSigningKey(SECRET_KEY)
                         .parseClaimsJws(token)
@@ -49,15 +49,15 @@ public class JwtFilter extends OncePerRequestFilter {
                 String email = claims.getSubject();
                 String role = claims.get("role", String.class);
 
-                // 🔥 Convert role → Spring format
+                //  Convert role → Spring format
                 List<SimpleGrantedAuthority> authorities =
                         List.of(new SimpleGrantedAuthority("ROLE_" + role));
 
-                // 🔥 Create Authentication object
+                //  Create Authentication object
                 UsernamePasswordAuthenticationToken auth =
                         new UsernamePasswordAuthenticationToken(email, null, authorities);
 
-                // 🔥 Set in SecurityContext
+                //  Set in SecurityContext
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }
