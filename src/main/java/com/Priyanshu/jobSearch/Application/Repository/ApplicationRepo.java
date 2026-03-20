@@ -7,4 +7,7 @@ import java.util.Optional;
 
 public interface ApplicationRepo extends JpaRepository <ApplicationModel, Long> {
 
+    // Spring Data JPA will auto-implement this query
+    boolean existsByUserIdAndJobId(Long userId, Long jobId);
+
 }

@@ -29,6 +29,12 @@ public class ApplicationService {
         JobModel Job = jobrepo.findById(JobId)
                 .orElseThrow(() -> new RuntimeException("Job Not Found"));
 
+        boolean alreadyApplied = applicationrepo.existsByUserIdAndJobId(UserId, JobId);
+
+        if (alreadyApplied) {
+            return "You have already applied to this job!";
+        }
+
         ApplicationModel application = new ApplicationModel();
 
         application.setJob(Job);
