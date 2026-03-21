@@ -28,17 +28,18 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> {})
 
-                // 🔥 VERY IMPORTANT (stateless JWT)
+                // VERY IMPORTANT (stateless JWT)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/user/**").permitAll()
+                        .requestMatchers("/api/jobs/getAllJobs").permitAll()// no need authentication for get all jobs
                         .anyRequest().authenticated()
                 )
 
-                // 🔥 JWT filter
+                // JWT filter
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
