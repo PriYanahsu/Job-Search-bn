@@ -10,14 +10,43 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
+      # 1️⃣ Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2️⃣ Set up Java
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+
+      # 3️⃣ Build the Spring Boot jar
+      - name: Build Jar
+        run: ./mvnw clean package -DskipTests
+
+      # 4️⃣ Copy jar to EC2
+      - name: Copy Jar to EC2
+        uses: appleboy/scp-action@v0.1.5
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: target/*.jar
+          target: /home/ubuntu/jobsearch/
+
+      # 5️⃣ SSH into EC2 and restart service
+      - name: SSH and restart Spring Boot service
+        uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd ~/Job-Search-bn
-            git pull origin main
-            ./mvnw clean package -DskipTests
-            sudo systemctl restart jobsearch
+            # stop service if running
+            sudo systemctl stop jobsearch || true
+            # move new jar to proper location
+            sudo mv /home/ubuntu/jobsearch/*.jar /home/ubuntu/jobsearch/jobsearch.jar
+            # start/restart service
+            sudo systemctl start jobsearch
+            sudo systemctl status jobsearch
