@@ -14,6 +14,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # 1.1️⃣ Make mvnw executable (fix Permission denied)
+      - name: Make Maven Wrapper Executable
+        run: chmod +x ./mvnw
+
       # 2️⃣ Test SSH connection to EC2
       - name: Test SSH connection
         uses: appleboy/ssh-action@v0.1.5
